@@ -43,19 +43,19 @@ App.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired
-    })
+      email: PropTypes.string.isRequired,
+    }),
   ).isRequired,
   isFetching: PropTypes.bool.isRequired,
-  getUsers: PropTypes.func.isRequired
+  getUsers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   // numbers: state.data.numbers
   users: state.users.users,
-  isFetching: state.users.isFetching
+  isFetching: state.users.isFetching,
 });
 
 export default connect(mapStateToProps, {
-  getUsers
+  getUsers,
 })(App);

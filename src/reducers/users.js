@@ -3,7 +3,7 @@ export const RECEIVE_USERS = '@@users/RECEIVE_USERS';
 
 export function fetchUsers() {
   return {
-    type: FETCH_USERS
+    type: FETCH_USERS,
   };
 }
 
@@ -11,14 +11,15 @@ export function receiveUsers(us) {
   return {
     type: RECEIVE_USERS,
     payload: {
-      users: us
-    }
+      users: us,
+    },
   };
 }
 
 export function getUsers() {
   return dispatch => {
     dispatch(fetchUsers());
+
     return fetch('https://jsonplaceholder.typicode.com/users')
       .then(res => res.json())
       .then(us => dispatch(receiveUsers(us)))
@@ -28,7 +29,7 @@ export function getUsers() {
 
 const initialState = {
   users: [],
-  isFetching: false
+  isFetching: false,
 };
 
 export default (state = initialState, action) => {
@@ -36,13 +37,13 @@ export default (state = initialState, action) => {
     case FETCH_USERS:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case RECEIVE_USERS:
       return {
         ...state,
         isFetching: false,
-        users: action.payload.users
+        users: action.payload.users,
       };
     default:
       return state;
