@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// yarn add react-router-dom
+import { BrowserRouter, Route } from 'react-router-dom';
 
 // Redux
 // yarn add redux redux-thunk redux-logger redux-devtools-extension react-redux
@@ -18,9 +20,11 @@ const middleware = [thunk, logger];
 const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(...middleware)));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <Route component={App} />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
 registerServiceWorker();
