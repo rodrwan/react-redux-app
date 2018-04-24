@@ -27,7 +27,7 @@ Redux Thunk middleware te permite retornar funciones como *action creators* en v
 
 Una vez instaladas las librerias, debemos incluir nuestra aplicación (componente principal, por lo general *App*) dentro del componente proporcionado por *react-redux*.
 
-```js
+```jsx
 import { Provider } from 'react-redux';
 ...
 
@@ -151,7 +151,7 @@ export default (state = initialState, action) => {
 
 ### Conectando componentes con nuestro store.
 
-```js
+```jsx
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
