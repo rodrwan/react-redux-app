@@ -65,15 +65,78 @@ const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(...m
 // main app render
 ```
 
-### Reducers
+### RootReducer
 
-##### Actions
+```js
+import { combineReducers } from 'redux';
 
+// Reducer que contendrá algunos números.
+// Por lo general, estos se guardan en una carpeta llamada *reducers* o *modules*
+import numbers from './reducers/numbers';
+
+export default combineReducers({
+  numbers: numbersReducer,
+});
+```
+
+#### Actions
+
+Las acciones son las encargadas de enviar información al store, estas acciones son las únicas que pueden acceder al store y modificarlo. La forma de enviar estas acciones al store es mediante el metodo **store.dispatch()**.
+
+```js
+export const SET_NUMBERS = '@@numbers/SET_NUMBERS';
+export const REQUEST_NUMBERS = '@@numbers/REQUEST_NUMBERS';
+...
+```
 ##### Action creator
 
+Son funciones encargadas de crear las acciones definidas anteriormente, estas funciones retornan un objeto plano que contiene una llave *type* la cual se define como la acción a ser ejecutada por nuestro reducer, y un *payload* (opcional), el cual contienen la información a ser ingresada o actualizada en nuestro store.
+
+```js
+export const requestNumbers = () => ({
+  type: REQUEST_NUMBERS,
+});
+
+export const setNumbers = (numbers) => ({
+  type: SET_NUMBERS,
+  payload: { numbers },
+});
+```
 ##### async action creator
 
-##### reducer
+Por medio de la ayuda de *react-thunk*, podremos actualizar nuestro reducer cuando una llamada asyncrona ocurra.
+*thunk*, nos permite retornar una función en un action creator, esta función como primer parametro recive el metodo **dispatch** el cual permite ejecutar una acción, la cual efectuará un cambio en el estado de nuestro reducer.
+
+```js
+export const setNumberTimeout = numbers => dispatch => {
+  setTimeout(() => dispatch(setNumbers(numbers)), 3 * 1000);
+};
+```
+#### Reducer
+
+
+Finalmente nuestro reducer queda de la forma:
+
+```js
+const initialState = {
+  numbers: [],
+  isFetching: false,
+};
+
+// Reducer
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case SET_NUMBERS:
+      return {
+        ...state,
+        numbers: action.payload.numbers,
+      };
+    default:
+      return state;
+  }
+};
+
+```
 
 ### Conectando componentes con nuestro store.
 
@@ -140,3 +203,4 @@ $ yarn add react-router-dom
 
 Esta librería nos permite crear rutas, utilizando compenentes y otras utilidades que nos permiten hacer las redirecciones internas a otras rutas sin perder el scope de nuestra aplicación.
 
+***to be continue...**
