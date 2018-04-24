@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import HomePage from './routes/home';
-import LoginPage from './routes/login';
+import SignUpPage from './routes/sign-up';
 
 const App = ({ location }) => (
   <div>
     <Route location={location} path="/" exact component={HomePage} />
-    <Route location={location} path="/login" exact component={LoginPage} />
+    <Route location={location} path="/sign-up" exact component={SignUpPage} />
   </div>
 );
 

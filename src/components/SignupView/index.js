@@ -5,7 +5,7 @@ import Form from './Form';
 import logo from '../../logo.svg';
 import '../../App.css';
 
-class FormView extends React.Component {
+class SignupView extends React.Component {
   submit = data => this.props.submit(data);
 
   render() {
@@ -25,14 +25,18 @@ class FormView extends React.Component {
         <div>
           <Form onSubmit={this.submit} isFetching={this.props.isFetching} />
         </div>
+
+        <a href="https://www.finciero.com" target="_blank" rel="noopener noreferrer">
+          Finciero
+        </a>
       </div>
     );
   }
 }
 
-FormView.propTypes = {
+SignupView.propTypes = {
   submit: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
-export default FormView;
+export default SignupView;
