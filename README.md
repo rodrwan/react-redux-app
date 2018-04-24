@@ -114,6 +114,7 @@ export const setNumberTimeout = numbers => dispatch => {
 ```
 #### Reducer
 
+El reducer es quién da forma al estado de esta parte de nuestra aplicación, y como mencionamos antes, es aquí donde termina la ejecución de las acciones, ya sea enviando o no información a nuestro estado.
 
 Finalmente nuestro reducer queda de la forma:
 
@@ -126,10 +127,20 @@ const initialState = {
 // Reducer
 export default (state = initialState, action) => {
   switch (action.type) {
+    // REQUEST_NUMBERS es ejecutada por el método requestNumbers() y
+    // simplemente actualiza el dato de 'isFetching'
+    case REQUEST_NUMBERS:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    // SET_NUMBERS es ejecutada por el método setNumbers() y además de
+    // actualizar el valor de 'isFetching' agrega nuevos datos a 'numbers'.
     case SET_NUMBERS:
       return {
         ...state,
         numbers: action.payload.numbers,
+        isFetching: false,
       };
     default:
       return state;
@@ -153,8 +164,8 @@ class HomePage extends React.Component {
     this.props.setNumbers([0, 1, 2, 3, 4]);
   }
 
-  // numbers es un props que es extraido desde el store y pasado a traves de los props del componente
-  // por medio del metodo *connect*
+  // numbers es un props que es extraido desde el store y pasado a traves de
+  // los props del componente por medio del metodo *connect*
   render() {
     return (
       <div>
@@ -168,19 +179,26 @@ class HomePage extends React.Component {
   }
 }
 
-// PropTypes es una forma "semi estricta" de definir el tipo de dato que será pasada a traves de los props del componente.
+// PropTypes es una forma "semi estricta" de definir el tipo de dato que será
+// pasada a traves de los props del componente.
 HomePage.propTypes = {
   numbers: PropTypes.arrayOf(PropTypes.number).isRequired,
   setNumbers: PropTypes.func.isRequired,
 };
 /*
 usando *connect* nos permite "conectar" nuestro store, con el componente
-el primer parentisis de connect, recibe algunos argumentos (mostraré los que siempre uso):
+el primer parentisis de connect, recibe algunos argumentos (mostraré los que
+siempre uso):
 
-- mapStateToProps: Si este argumento es definido y usado en el método connect las propiedades seleccionadas del store serán pasadas al componente definido en el segundo par de parentesis.
-Este metodo debe retornar un objeto, con las propiedades que serán heredadas por medio de los props del respectivo componente.
+- mapStateToProps: Si este argumento es definido y usado en el método connect
+las propiedades seleccionadas del store serán pasadas al componente definido
+en el segundo par de parentesis. Este metodo debe retornar un objeto, con
+las propiedades que serán heredadas por medio de los props del respectivo
+componente.
 
-- mapDispatchToProps: Este parametro representa los *action creators* que podrán ser usados dentro del componente pasada en el segundo par de parentesis. En general, estos métodos salen del reducer a ser usado dentro del componente.
+- mapDispatchToProps: Este parametro representa los *action creators* que
+podrán ser usados dentro del componente pasada en el segundo par de parentesis.
+En general, estos métodos salen del reducer a ser usado dentro del componente.
 */
 const mapStateToProps = state => ({
   numbers: state.numbers.element,
