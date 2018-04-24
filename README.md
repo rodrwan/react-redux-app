@@ -45,14 +45,19 @@ Esto nos permite acceder a nuestro *store* (Aún no difinido), por medio de los 
 
 ### Store
 
+El *store* es como una gran cesta donde, a medida que se vaya definiendo, se irán guardando los datos de los diferentes reducers.
 ```js
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+// Archivo que junta todos los reducers que definamos (ver siguiente sección).
 import rootReducers from './rootReducers';
 
 ...
+// helpers
+// - thunk: nos permite retornar una función en los action creators.
+// - logger: loggea los cambios en el state cuando un *action* es llamado.
 const middleware = [thunk, logger];
 const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(...middleware)));
 
@@ -62,6 +67,13 @@ const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(...m
 
 ### Reducers
 
+##### Actions
+
+##### Action creator
+
+##### async action creator
+
+##### reducer
 
 ### Conectando componentes con nuestro store.
 
@@ -73,7 +85,7 @@ import { setNumbers } from '../reducers/users';
 
 class HomePage extends React.Component {
   componentWillMount() {
-    // pasamos un arreglo de numeros a nuestro *async action creator*
+    // Pasamos un arreglo de numeros a nuestro *async action creator*.
     // Este aac es pasado a traves de mapDispatchToProps
     this.props.setNumbers([0, 1, 2, 3, 4]);
   }
