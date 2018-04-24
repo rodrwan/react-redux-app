@@ -1,3 +1,4 @@
+import { setUser } from './users';
 export const REQUEST_SAVE_USER = '@@auth/REQUEST_SAVE_USER';
 export const RESPONSE_SAVE_USER = '@@auth/RESPONSE_SAVE_USER';
 
@@ -5,11 +6,11 @@ const requestSaveUser = () => ({
   type: REQUEST_SAVE_USER,
 });
 
-const responseSaveUser = (response, error) => ({
+const responseSaveUser = (response, errors) => ({
   type: RESPONSE_SAVE_USER,
   payload: {
     response,
-    error,
+    errors,
   },
 });
 
@@ -26,7 +27,8 @@ export const submit = data => dispatch => {
     .then(res => res.json())
     .then(user => {
       console.log(user);
-      dispatch(responseSaveUser(user, null));
+      dispatch(setUser(user));
+      dispatch(responseSaveUser(user, user.errors));
     })
     .catch(err => console.log(err));
 };
@@ -34,7 +36,7 @@ export const submit = data => dispatch => {
 const initialState = {
   isFetching: false,
   response: null,
-  error: null,
+  errors: null,
 };
 
 export default (state = initialState, action) => {
@@ -47,8 +49,8 @@ export default (state = initialState, action) => {
     case RESPONSE_SAVE_USER:
       return {
         ...state,
-        response: action.payload.error,
-        error: action.payload.error,
+        response: action.payload.response,
+        errors: action.payload.errors,
         isFetching: false,
       };
     default:

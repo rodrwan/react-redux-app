@@ -1,5 +1,15 @@
 export const FETCH_USERS = '@@users/FETCH_USERS';
 export const RECEIVE_USERS = '@@users/RECEIVE_USERS';
+export const SET_USER = '@@users/SET_USER';
+
+export function setUser(user) {
+  return {
+    type: SET_USER,
+    payload: {
+      user,
+    },
+  };
+}
 
 export function fetchUsers() {
   return {
@@ -43,8 +53,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        users: action.payload.users,
+        users: state.users.concat(action.payload.users),
       };
+    case SET_USER: {
+      return {
+        ...state,
+        users: state.users.concat(action.payload.user),
+      };
+    }
     default:
       return state;
   }

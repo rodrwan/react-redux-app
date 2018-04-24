@@ -23,7 +23,7 @@ class FormView extends React.Component {
         </p>
 
         <div>
-          <Form onSubmit={this.submit} />
+          <Form onSubmit={this.submit} isFetching={this.props.isFetching} />
         </div>
       </div>
     );
@@ -32,6 +32,7 @@ class FormView extends React.Component {
 
 FormView.propTypes = {
   submit: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 export default FormView;

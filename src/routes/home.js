@@ -8,7 +8,9 @@ import '../App.css';
 
 class HomePage extends React.Component {
   componentWillMount() {
-    this.props.getUsers();
+    if (this.props.users.length === 0) {
+      this.props.getUsers();
+    }
   }
 
   render() {

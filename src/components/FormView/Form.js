@@ -10,8 +10,7 @@ class Form extends React.Component {
       last_name: '',
       email: '',
       phone: '',
-      isValid: '',
-      error: {},
+      errors: {},
     };
   }
 
@@ -22,29 +21,22 @@ class Form extends React.Component {
   };
 
   validate = data => {
-    const error = {};
-    let isValid = true;
+    const errors = {};
 
-    if (!data.first_name) error.first_name = 'First name cannot be blank';
-    if (!data.last_name) error.last_name = 'Last name cannot be blank';
-    if (!data.email) error.email = 'Email name cannot be blank';
-    if (!data.phone) error.phone = 'Phone name cannot be blank';
-
-    if (Object.prototype.hasOwnProperty.call(error, 'first_name')) isValid = false;
-    if (Object.prototype.hasOwnProperty.call(error, 'last_name')) isValid = false;
-    if (Object.prototype.hasOwnProperty.call(error, 'email')) isValid = false;
-    if (Object.prototype.hasOwnProperty.call(error, 'phone')) isValid = false;
+    if (!data.first_name) errors.first_name = 'First name cannot be blank';
+    if (!data.last_name) errors.last_name = 'Last name cannot be blank';
+    if (!data.email) errors.email = 'Email name cannot be blank';
+    if (!data.phone) errors.phone = 'Phone name cannot be blank';
 
     this.setState({
-      error,
-      isValid,
+      errors,
     });
   };
 
   submit = () => {
-    this.validate(this.state);
-    if (this.state.isValid) {
-      this.props.submit(this.state);
+    const { errors } = this.state;
+    if (Object.keys(errors).length === 0) {
+      this.props.onSubmit(this.state);
     }
   };
 
@@ -54,7 +46,8 @@ class Form extends React.Component {
         <div>
           <pre style={{ textAlign: 'left' }}>{JSON.stringify(this.state, null, 2)}</pre>
         </div>
-        <form>
+
+        <div>
           <div>
             <label htmlFor="first_name">First name</label>
             <input
@@ -100,18 +93,18 @@ class Form extends React.Component {
           </div>
 
           <div>
-            <button disabled={!this.state.isValid && this.props.isFetching} onSubmit={this.submit}>
+            <button onClick={this.submit} disabled={this.props.isFetching}>
               Submit
             </button>
           </div>
-        </form>
+        </div>
       </div>
     );
   }
 }
 
 Form.propTypes = {
-  submit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
