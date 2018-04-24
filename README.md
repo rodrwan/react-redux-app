@@ -43,7 +43,7 @@ ReactDOM.render(
 
 Esto nos permite acceder a nuestro *store* (Aún no difinido), por medio de los props de nuestros componentes internos (recordar esto, que más adelante lo veremos en detalle, no es tan simple, pero a la vez si xD).
 
-### store
+### Store
 
 ```js
 import { createStore, applyMiddleware } from 'redux';
@@ -59,6 +59,65 @@ const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(...m
 ...
 // main app render
 ```
+
+### Reducers
+
+
+### Conectando componentes con nuestro store.
+
+```js
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setNumbers } from '../reducers/users';
+
+class HomePage extends React.Component {
+  componentWillMount() {
+    // pasamos un arreglo de numeros a nuestro *async action creator*
+    // Este aac es pasado a traves de mapDispatchToProps
+    this.props.setNumbers([0, 1, 2, 3, 4]);
+  }
+
+  // numbers es un props que es extraido desde el store y pasado a traves de los props del componente
+  // por medio del metodo *connect*
+  render() {
+    return (
+      <div>
+        {this.props.numbers.map((n, idx) => (
+          <p key={`n-${idx}`}>
+            {n.}
+          </p>
+        ))}
+      </div>
+    );
+  }
+}
+
+// PropTypes es una forma "semi estricta" de definir el tipo de dato que será pasada a traves de los props del componente.
+HomePage.propTypes = {
+  numbers: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setNumbers: PropTypes.func.isRequired,
+};
+/*
+usando *connect* nos permite "conectar" nuestro store, con el componente
+el primer parentisis de connect, recibe algunos argumentos (mostraré los que siempre uso):
+
+- mapStateToProps: Si este argumento es definido y usado en el método connect las propiedades seleccionadas del store serán pasadas al componente definido en el segundo par de parentesis.
+Este metodo debe retornar un objeto, con las propiedades que serán heredadas por medio de los props del respectivo componente.
+
+- mapDispatchToProps: Este parametro representa los *action creators* que podrán ser usados dentro del componente pasada en el segundo par de parentesis. En general, estos métodos salen del reducer a ser usado dentro del componente.
+*/
+const mapStateToProps = state => ({
+  numbers: state.numbers.element,
+});
+
+const mapDispatchToProps = {
+  setNumbers,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+```
+
 # React-router
 
 React reuter nos permite extender nuestra aplicación para tener más de una ruta dentro de nuestro sistema, pero para esto no usamos directamenre react-router, sino que instalamos lo siguiente.
