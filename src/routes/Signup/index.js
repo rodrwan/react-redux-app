@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import SignupView from '../components/SignupView';
-import { submit } from '../reducers/auth';
+import SignupView from './View/Signup';
+import { submit } from '../../reducers/auth';
 
 const mapStateToProps = state => ({
   isFetching: state.auth.isFetching,

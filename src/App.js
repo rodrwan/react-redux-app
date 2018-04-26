@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
-import HomePage from './routes/home';
-import SignUpPage from './routes/sign-up';
+import HomePage from './routes/Home';
+import SignUpPage from './routes/Signup';
 
 const App = ({ location }) => (
   <div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Form, Button } from 'semantic-ui-react';
 
-class Form extends React.Component {
+class FormCmp extends React.Component {
   constructor(props) {
     super(props);
 
@@ -47,8 +48,8 @@ class Form extends React.Component {
           <pre style={{ textAlign: 'left' }}>{JSON.stringify(this.state, null, 2)}</pre>
         </div>
 
-        <div>
-          <div>
+        <Form>
+          <Form.Field>
             <label htmlFor="first_name">First name</label>
             <input
               type="text"
@@ -57,9 +58,9 @@ class Form extends React.Component {
               onChange={this.onChangeText}
               placeholder="First name"
             />
-          </div>
+          </Form.Field>
 
-          <div>
+          <Form.Field>
             <label htmlFor="last_name">Last name</label>
             <input
               type="text"
@@ -68,9 +69,9 @@ class Form extends React.Component {
               onChange={this.onChangeText}
               placeholder="Last name"
             />
-          </div>
+          </Form.Field>
 
-          <div>
+          <Form.Field>
             <label htmlFor="email">Email name</label>
             <input
               type="email"
@@ -79,9 +80,9 @@ class Form extends React.Component {
               onChange={this.onChangeText}
               placeholder="Email"
             />
-          </div>
+          </Form.Field>
 
-          <div>
+          <Form.Field>
             <label htmlFor="phone">Phone</label>
             <input
               type="text"
@@ -90,22 +91,19 @@ class Form extends React.Component {
               onChange={this.onChangeText}
               placeholder="+56912345678"
             />
-          </div>
-
-          <div>
-            <button onClick={this.submit} disabled={this.props.isFetching}>
-              Submit
-            </button>
-          </div>
-        </div>
+          </Form.Field>
+          <Button type="submit" onClick={this.submit} disabled={this.props.isFetching}>
+            Submit
+          </Button>
+        </Form>
       </div>
     );
   }
 }
 
-Form.propTypes = {
+FormCmp.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
-export default Form;
+export default FormCmp;

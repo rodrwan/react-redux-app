@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// semantic ui style
+import 'semantic-ui-css/semantic.min.css';
 // yarn add react-router-dom
 import { BrowserRouter, Route } from 'react-router-dom';
 
@@ -12,7 +14,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducers from './rootReducers';
 
-import './index.css';
+import './styles/css/index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
